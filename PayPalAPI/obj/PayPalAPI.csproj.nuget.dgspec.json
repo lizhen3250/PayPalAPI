@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\zhenli3\\Desktop\\aa\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj": {}
+    "C:\\Users\\zhenli3\\Desktop\\PayPalAPI\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zhenli3\\Desktop\\aa\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj": {
+    "C:\\Users\\zhenli3\\Desktop\\PayPalAPI\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zhenli3\\Desktop\\aa\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj",
+        "projectUniqueName": "C:\\Users\\zhenli3\\Desktop\\PayPalAPI\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj",
         "projectName": "PayPalAPI",
-        "projectPath": "C:\\Users\\zhenli3\\Desktop\\aa\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj",
+        "projectPath": "C:\\Users\\zhenli3\\Desktop\\PayPalAPI\\PayPalAPI\\PayPalAPI\\PayPalAPI.csproj",
         "packagesPath": "C:\\Users\\zhenli3\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zhenli3\\Desktop\\aa\\PayPalAPI\\PayPalAPI\\obj\\",
+        "outputPath": "C:\\Users\\zhenli3\\Desktop\\PayPalAPI\\PayPalAPI\\PayPalAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\zhenli3\\AppData\\Roaming\\NuGet\\NuGet.Config"
