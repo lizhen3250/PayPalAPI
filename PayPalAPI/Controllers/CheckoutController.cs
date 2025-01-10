@@ -46,28 +46,28 @@ public class CheckoutController : ControllerBase
 
         if (order.payment_source == "google_pay")
         {
-           body = paypalRequestBody.GooglePayBody(order);
+            body = paypalRequestBody.GooglePayBody(order);
         }
 
         if (order.payment_source == "apple_pay")
         {
-           body = paypalRequestBody.ApplePayBody(order);
+            body = paypalRequestBody.ApplePayBody(order);
         }
         if (order.payment_source == "paypal" || order.payment_source == null)
         {
             body = paypalRequestBody.PayPalBody(order);
         }
 
-        if (order.vault==true && order.payment_source == "paypal")
+        if (order.vault == true && order.payment_source == "paypal")
         {
             body = paypalRequestBody.PayPalVaultBody(order);
         }
 
-        if(order.vault == true && order.payment_source == "card")
+        if (order.vault == true && order.payment_source == "card")
         {
             body = paypalRequestBody.CardVaultIdBody(order);
         }
-        if(order.vault_id != null)
+        if (order.vault_id != null)
         {
             body = paypalRequestBody.PayPalVaultBody(order);
         }
@@ -84,4 +84,17 @@ public class CheckoutController : ControllerBase
     }
 
     //Capture Order
+    [HttpPost(template: "capture", Name = "captureorder")]
+    public async Task<IActionResult> CaptureOrder(Capture capture)
+    {
+        Console.WriteLine(capture.orderId);
+        var token = getAccessToken();
+        var options = new RestClientOptions(sandboxEndpoint);
+        var client = new RestClient(options);
+        var request = new RestRequest("/v2/checkout/orders/"+capture.orderId+"/capture", Method.Post);
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
+        RestResponse response = await client.ExecuteAsync(request);
+        return Ok(response.Content);
+    }
 }
