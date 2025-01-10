@@ -23,10 +23,16 @@ public class CheckoutController : ControllerBase
     }
 
     [HttpGet(template: "orders/{orderId}", Name = "orders")]
-    public IEnumerable<string> ShowOrderDetails(string orderId)
+    public async Task<IActionResult> ShowOrderDetails(string orderId)
     {
-        getAccessToken();
-        return new string[] { "vaule 1", "vaule 1", orderId };
+        var token = getAccessToken();
+        var options = new RestClientOptions(sandboxEndpoint);
+        var client = new RestClient(options);
+        var request = new RestRequest("/v2/checkout/orders/"+orderId+"", Method.Get);
+        request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
+        request.AddHeader("Content-Type", "application/json");
+        RestResponse response = await client.ExecuteAsync(request);
+        return Ok(response.Content);
     }
 
     //Create Order
@@ -91,7 +97,7 @@ public class CheckoutController : ControllerBase
         var token = getAccessToken();
         var options = new RestClientOptions(sandboxEndpoint);
         var client = new RestClient(options);
-        var request = new RestRequest("/v2/checkout/orders/"+capture.orderId+"/capture", Method.Post);
+        var request = new RestRequest("/v2/checkout/orders/" + capture.orderId + "/capture", Method.Post);
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
         RestResponse response = await client.ExecuteAsync(request);

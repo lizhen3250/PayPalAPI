@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PayPalAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d4c3cff69e542f2ff310df7e89c279e456f4539")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d630efdb0a53b02485759c84ec571f59b9eac11")]
 [assembly: System.Reflection.AssemblyProductAttribute("PayPalAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PayPalAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
