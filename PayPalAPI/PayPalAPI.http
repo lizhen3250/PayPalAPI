@@ -1,0 +1,6 @@
+@PayPalAPI_HostAddress = http://localhost:5024
+
+GET {{PayPalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
