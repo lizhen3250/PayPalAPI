@@ -22,7 +22,7 @@ public class CheckoutController : ControllerBase
         return token;
     }
 
-    [HttpGet(template: "orders/{orderId}", Name = "orders")]
+    [HttpGet(template: "orders/{orderId}", Name = "showorderdetails")]
     public async Task<IActionResult> ShowOrderDetails(string orderId)
     {
         var token = getAccessToken();

@@ -37,4 +37,18 @@ public class AuthenticationController : ControllerBase
         RestResponse response = await client.ExecuteAsync(request);
         return new JsonResult(response.Content);
     }
+
+        [HttpPost(template: "idtoken", Name = "vaultidtoken")]
+    public async Task<IActionResult> GetVaultIdAccessTokenAsync()
+    {
+        var options = new RestClientOptions(sandboxEndpoint);
+        var client = new RestClient(options);
+        var request = new RestRequest("/v1/oauth2/token/", Method.Post);
+        request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.AddHeader("Authorization", "Basic QWZpOWFZMVE0TlJPdTlxeHVQTmwzcVkzVXJBcWFjRkVyNUEydlFQb01FN3otMHQyeXhLSEZ1SXowRzlqRTJJUWhFbTlXLV9ZeW42M2VPUW46RUlia2RpMXBxT2daOVpPSWFMMFlsNXBWSjZMU0c5X3VNN3RZNjRnZUxpNVRwSXg5QW9HeG44T3Fna3hMSlg4ekw0bmhQMF9TTGFXWW02Uk8=");
+        request.AddParameter("grant_type", "client_credentials");
+        request.AddParameter("target_customer_id", "id_token");
+        RestResponse response = await client.ExecuteAsync(request);
+        return new JsonResult(response.Content);
+    }
 }
