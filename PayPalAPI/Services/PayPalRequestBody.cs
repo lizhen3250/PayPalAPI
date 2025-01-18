@@ -286,4 +286,15 @@ $@"            ""vault_id"": ""{order.vault_id}""" + "\n" +
 @"  }";
     return body;
      }
+
+    public string AddTrackingBody(Tracking track)
+    {
+        var body = @"{" + "\n" +
+                        $@"  ""capture_id"": ""{track.capture_id}""," + "\n" +
+                        $@"  ""tracking_number"": ""{track.tracking_number}""," + "\n" +
+                        $@"  ""carrier"": ""{track.carrier}""," + "\n" +
+                        $@"  ""notify_payer"": {track.notify_payer.ToString().ToLower()}" + "\n" +
+                    @"}";
+        return body;
+    }
 }

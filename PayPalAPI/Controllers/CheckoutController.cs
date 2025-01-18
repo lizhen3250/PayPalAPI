@@ -83,7 +83,7 @@ public class CheckoutController : ControllerBase
         var request = new RestRequest("/v2/checkout/orders", Method.Post);
         request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
         request.AddHeader("Content-Type", "application/json");
-
+        Console.WriteLine(body);
         request.AddStringBody(body, DataFormat.Json);
         RestResponse response = await client.ExecuteAsync(request);
         return Ok(response.Content);

@@ -11,6 +11,7 @@ namespace PayPalAPI.Controllers;
 public class TrackingController : ControllerBase
 {
     private AuthenticationController authController = new AuthenticationController();
+    private PayPalRequestBody requestBody = new PayPalRequestBody();
     private readonly string sandboxEndpoint = "https://api.sandbox.paypal.com";
     private PayPalRequestBody paypalRequestBody = new PayPalRequestBody();
 
@@ -18,19 +19,21 @@ public class TrackingController : ControllerBase
     {
         var response = authController.GetAccessTokenAsync().Result as JsonResult;
         var token = JsonConvert.DeserializeObject<Token>(response.Value.ToString());
-        Console.Write(token.Access_token);
         return token;
     }
 
-    [HttpGet(template: "tracking", Name = "listtracking")]
-    public async Task<IActionResult> ListTracking()
+    [HttpPost(template: "{order_id}/track", Name = "addtracking")]
+    public async Task<IActionResult> AddTracking(string order_id, Tracking track)
     {
         var token = getAccessToken();
+        string body = requestBody.AddTrackingBody(track);
+        Console.WriteLine(body);
         var options = new RestClientOptions(sandboxEndpoint);
         var client = new RestClient(options);
-        var request = new RestRequest("/v1/reporting/transactions?end_date=2025-01-30T23:59:59-0700&start_date=2025-01-01T00:00:00-0700", Method.Get);
-        request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
+        var request = new RestRequest("v2/checkout/orders/" + order_id + "/track", Method.Post);
         request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
+        request.AddStringBody(body, DataFormat.Json);
         RestResponse response = await client.ExecuteAsync(request);
         return Ok(response.Content);
     }

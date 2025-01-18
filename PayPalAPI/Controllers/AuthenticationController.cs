@@ -18,7 +18,7 @@ public class AuthenticationController : ControllerBase
         var client = new RestClient(options);
         var request = new RestRequest("/v1/oauth2/token/", Method.Post);
         request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.AddHeader("Authorization", "Basic QWZpOWFZMVE0TlJPdTlxeHVQTmwzcVkzVXJBcWFjRkVyNUEydlFQb01FN3otMHQyeXhLSEZ1SXowRzlqRTJJUWhFbTlXLV9ZeW42M2VPUW46RUlia2RpMXBxT2daOVpPSWFMMFlsNXBWSjZMU0c5X3VNN3RZNjRnZUxpNVRwSXg5QW9HeG44T3Fna3hMSlg4ekw0bmhQMF9TTGFXWW02Uk8=");
+        request.AddHeader("Authorization", "Basic QVNOeXRZcUNYZTBTQ0dFeXBfQy1vM2kyUzNhMFhZQVNEdnJSeWZrMy00eDVHZ3JYU3BpZEpNOGdRWXNXMm94VmhtTnZWZmF5NzdjNENEbVA6RUFSdW5rYkFyVHhYM3h0elAxeV8xLTBUSlYtNC1EVjRzV0FZaWQzb05yMDJpXzJDY0RCdXBROWxDWThELUFoeWVoUFA1Qk1zZTlFZm1nc1I=");
         request.AddParameter("grant_type", "client_credentials");
         RestResponse response = await client.ExecuteAsync(request);
         return new JsonResult(response.Content);
@@ -31,23 +31,37 @@ public class AuthenticationController : ControllerBase
         var client = new RestClient(options);
         var request = new RestRequest("/v1/oauth2/token/", Method.Post);
         request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.AddHeader("Authorization", "Basic QWZpOWFZMVE0TlJPdTlxeHVQTmwzcVkzVXJBcWFjRkVyNUEydlFQb01FN3otMHQyeXhLSEZ1SXowRzlqRTJJUWhFbTlXLV9ZeW42M2VPUW46RUlia2RpMXBxT2daOVpPSWFMMFlsNXBWSjZMU0c5X3VNN3RZNjRnZUxpNVRwSXg5QW9HeG44T3Fna3hMSlg4ekw0bmhQMF9TTGFXWW02Uk8=");
+        request.AddHeader("Authorization", "Basic QVNOeXRZcUNYZTBTQ0dFeXBfQy1vM2kyUzNhMFhZQVNEdnJSeWZrMy00eDVHZ3JYU3BpZEpNOGdRWXNXMm94VmhtTnZWZmF5NzdjNENEbVA6RUFSdW5rYkFyVHhYM3h0elAxeV8xLTBUSlYtNC1EVjRzV0FZaWQzb05yMDJpXzJDY0RCdXBROWxDWThELUFoeWVoUFA1Qk1zZTlFZm1nc1I=");
         request.AddParameter("grant_type", "client_credentials");
         request.AddParameter("target_customer_id", customerId);
         RestResponse response = await client.ExecuteAsync(request);
         return new JsonResult(response.Content);
     }
 
-        [HttpPost(template: "idtoken", Name = "vaultidtoken")]
+    [HttpPost(template: "idtoken", Name = "vaultidtoken")]
     public async Task<IActionResult> GetVaultIdAccessTokenAsync()
     {
         var options = new RestClientOptions(sandboxEndpoint);
         var client = new RestClient(options);
         var request = new RestRequest("/v1/oauth2/token/", Method.Post);
         request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.AddHeader("Authorization", "Basic QWZpOWFZMVE0TlJPdTlxeHVQTmwzcVkzVXJBcWFjRkVyNUEydlFQb01FN3otMHQyeXhLSEZ1SXowRzlqRTJJUWhFbTlXLV9ZeW42M2VPUW46RUlia2RpMXBxT2daOVpPSWFMMFlsNXBWSjZMU0c5X3VNN3RZNjRnZUxpNVRwSXg5QW9HeG44T3Fna3hMSlg4ekw0bmhQMF9TTGFXWW02Uk8=");
+        request.AddHeader("Authorization", "Basic QVNOeXRZcUNYZTBTQ0dFeXBfQy1vM2kyUzNhMFhZQVNEdnJSeWZrMy00eDVHZ3JYU3BpZEpNOGdRWXNXMm94VmhtTnZWZmF5NzdjNENEbVA6RUFSdW5rYkFyVHhYM3h0elAxeV8xLTBUSlYtNC1EVjRzV0FZaWQzb05yMDJpXzJDY0RCdXBROWxDWThELUFoeWVoUFA1Qk1zZTlFZm1nc1I=");
         request.AddParameter("grant_type", "client_credentials");
-        request.AddParameter("target_customer_id", "id_token");
+        request.AddParameter("response_type", "id_token");
+        RestResponse response = await client.ExecuteAsync(request);
+        return new JsonResult(response.Content);
+    }
+
+    [HttpPost(template: "code", Name = "authorizationcode")]
+    public async Task<IActionResult> GetAuthorizationCode(string code)
+    {
+        var options = new RestClientOptions(sandboxEndpoint);
+        var client = new RestClient(options);
+        var request = new RestRequest("/v1/oauth2/token", Method.Post);
+        request.AddHeader("Authorization", "Basic QVNOeXRZcUNYZTBTQ0dFeXBfQy1vM2kyUzNhMFhZQVNEdnJSeWZrMy00eDVHZ3JYU3BpZEpNOGdRWXNXMm94VmhtTnZWZmF5NzdjNENEbVA6RUFSdW5rYkFyVHhYM3h0elAxeV8xLTBUSlYtNC1EVjRzV0FZaWQzb05yMDJpXzJDY0RCdXBROWxDWThELUFoeWVoUFA1Qk1zZTlFZm1nc1I=");
+        request.AddHeader("Content-Type", "text/plain");
+        var body = @"grant_type=authorization_code&code=" + code;
+        request.AddParameter("text/plain", body, ParameterType.RequestBody);
         RestResponse response = await client.ExecuteAsync(request);
         return new JsonResult(response.Content);
     }
