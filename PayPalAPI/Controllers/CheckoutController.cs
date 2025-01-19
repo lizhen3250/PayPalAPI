@@ -44,10 +44,14 @@ public class CheckoutController : ControllerBase
     [HttpPost(template: "orders", Name = "createorder")]
     public async Task<IActionResult> CreateOrder([FromBody] Order order)
     {
+        var token = getAccessToken();
+        var options = new RestClientOptions(sandboxEndpoint);
+        var client = new RestClient(options);
+        var request = new RestRequest("/v2/checkout/orders", Method.Post);
         string body = "";
         if (order.payment_source == "card")
         {
-            paypalRequestBody.CardPayBody(order);
+            body=paypalRequestBody.CardPayBody(order);
         }
 
         if (order.payment_source == "google_pay")
@@ -72,17 +76,15 @@ public class CheckoutController : ControllerBase
         if (order.vault == true && order.payment_source == "card")
         {
             body = paypalRequestBody.CardVaultIdBody(order);
+            request.AddHeader("PayPal-Request-Id",new Guid().ToString());
         }
         if (order.vault_id != null)
         {
             body = paypalRequestBody.PayPalVaultBody(order);
         }
-        var token = getAccessToken();
-        var options = new RestClientOptions(sandboxEndpoint);
-        var client = new RestClient(options);
-        var request = new RestRequest("/v2/checkout/orders", Method.Post);
         request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
         request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("PayPal-Request-Id",Guid.NewGuid().ToString());
         Console.WriteLine(body);
         request.AddStringBody(body, DataFormat.Json);
         RestResponse response = await client.ExecuteAsync(request);

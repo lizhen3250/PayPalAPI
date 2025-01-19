@@ -17,7 +17,7 @@ public class PaymentTokenController : ControllerBase
         var token = JsonConvert.DeserializeObject<Token>(response.Value.ToString());
         return token;
     }
-    //api/paymenttoken/setup-tokens
+    //api/paymenttoken/setup-tokens for paypal
     [HttpPost(template: "setup-tokens", Name = "setuptoken")]
     public async Task<IActionResult> SetupToken()
     {
@@ -32,6 +32,28 @@ public class PaymentTokenController : ControllerBase
 @"                }" + "\n" +
 @"            }" + "\n" +
 @"        }";
+        var token = getAccessToken();
+        var options = new RestClientOptions(sandboxEndpoint);
+        var client = new RestClient(options);
+        var request = new RestRequest("v3/vault/setup-tokens", Method.Post);
+        request.AddHeader("Authorization", token.Token_type + " " + token.Access_token);
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("PayPal-Request-Id",Guid.NewGuid().ToString());
+        request.AddStringBody(body, DataFormat.Json);
+        RestResponse response = await client.ExecuteAsync(request);
+        return Ok(response.Content);
+    }
+
+    [HttpPost(template: "setup-tokens-card", Name = "setuptokencard")]
+    public async Task<IActionResult> CardSetupToken()
+    {
+        var body = @"{" + "\n" +
+@"                  ""payment_source"": {" + "\n" +
+@"                      ""card"": {" + "\n" +
+@"                      }," + "\n" +
+@"                  ""verification_method"": ""SCA_WHEN_REQUIRED""" + "\n" +
+@"                  }" + "\n" +
+@"               }";
         var token = getAccessToken();
         var options = new RestClientOptions(sandboxEndpoint);
         var client = new RestClient(options);

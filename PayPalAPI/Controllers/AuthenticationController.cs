@@ -33,6 +33,7 @@ public class AuthenticationController : ControllerBase
         request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
         request.AddHeader("Authorization", "Basic QVNOeXRZcUNYZTBTQ0dFeXBfQy1vM2kyUzNhMFhZQVNEdnJSeWZrMy00eDVHZ3JYU3BpZEpNOGdRWXNXMm94VmhtTnZWZmF5NzdjNENEbVA6RUFSdW5rYkFyVHhYM3h0elAxeV8xLTBUSlYtNC1EVjRzV0FZaWQzb05yMDJpXzJDY0RCdXBROWxDWThELUFoeWVoUFA1Qk1zZTlFZm1nc1I=");
         request.AddParameter("grant_type", "client_credentials");
+        request.AddParameter("response_type", "id_token");
         request.AddParameter("target_customer_id", customerId);
         RestResponse response = await client.ExecuteAsync(request);
         return new JsonResult(response.Content);
